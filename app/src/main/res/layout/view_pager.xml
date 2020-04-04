@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#1DACEF"
+            >
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/phrases_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phrases"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/numbers_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Numbers" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/family_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Family"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/color_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Colors"/>
+
+        </com.google.android.material.tabs.TabLayout>
+
+    </androidx.viewpager.widget.ViewPager>
+</RelativeLayout>
