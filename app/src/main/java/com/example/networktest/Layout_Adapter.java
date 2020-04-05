@@ -4,6 +4,7 @@ package com.example.networktest;
         import android.content.Context;
         import android.graphics.Color;
         import android.graphics.Movie;
+        import android.util.Log;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class Layout_Adapter extends ArrayAdapter {
     public Layout_Adapter(@NonNull Context context, int resource, @NonNull List objects, String vBackgroundColor) {
         super(context, resource, objects);
         backgroundColor = vBackgroundColor;
+        Log.v("Name","Games");
     }
 
     @NonNull
@@ -45,16 +47,21 @@ public class Layout_Adapter extends ArrayAdapter {
 
 
 
-        // Create Text View for miwok Word and set text to it
+        // Create Image View for Cover and set image to it
 
 
 
 
+        // Create Text View for Game Name and set text to it
+        TextView gameNameView = (TextView) listItem.findViewById(R.id.game_name);
+        gameNameView.setText(currentWords.getName());
 
-        // Create Text View for english word and set text to it
+        Log.v("Text View"," " + gameNameView);
 
 
 
+
+        // Create Text View for Company Name and set text to it
 
 
 

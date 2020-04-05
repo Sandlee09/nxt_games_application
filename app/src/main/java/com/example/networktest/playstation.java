@@ -7,14 +7,11 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
-import android.util.JsonToken;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -24,13 +21,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class playstation extends Fragment{
     ArrayList<Long> vGameID ;
     ArrayList<Integer> vPlatforms;
     final ArrayList<Games> games = new ArrayList<Games>();
+    View view;
+
+    ArrayList<Games> test = new ArrayList<Games>();
+
+
 
     public playstation() {
         // Required empty public constructor
@@ -42,23 +45,15 @@ public class playstation extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.activity_list, container, false);
+        view = inflater.inflate(R.layout.activity_list, container, false);
 
         new backgroundTasks().execute();
 
 
 
+        test.add(new Games("The Last of Us", 88888, 88888, 8888888));
 
 
-
-        //Create a Layout Adapter instance
-        final Layout_Adapter adapter = new Layout_Adapter(getContext(), 0, games, "#EFA21D");
-
-        //Create a new listView set it to id of the rootView in activity_numbers
-        ListView listView = (ListView) view.findViewById(R.id.list);
-
-        //setAdapter to listView
-        listView.setAdapter(adapter);
 
 
         return view;
@@ -66,17 +61,23 @@ public class playstation extends Fragment{
 
 
     public void updateUI() {
-        TextView textView = (TextView) getActivity().findViewById(R.id.text_view);
-        textView.setText(vGameID.get(5).toString());
+//Create a Layout Adapter instance
+        final Layout_Adapter adapter = new Layout_Adapter(getContext(), 0, test, "#EFA21D");
+
+        //Create a new listView set it to id of the rootView in activity_numbers
+        ListView listView = (ListView) view.findViewById(R.id.list);
+        Log.v("View","" + listView);
+
+        //setAdapter to listView
+        listView.setAdapter(adapter);
     }
 
-    class backgroundTasks extends AsyncTask {
+    class backgroundTasks extends AsyncTask <String, Void,Boolean>{
 
-        private Object fullList;
 
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
-        protected Games doInBackground(Object[] objects) {
+        protected Boolean doInBackground(String...strings) {
 
 
 
@@ -95,7 +96,9 @@ public class playstation extends Fragment{
 
 
             for (int i = 0; i < vGameID.size(); i++) {
+
                 if (vPlatforms.get(i) == 48) {
+                    Log.v("is loop running","" + i);
                    String gameIdString =  Long.toString(vGameID.get(i));
 
                     try {
@@ -118,26 +121,33 @@ public class playstation extends Fragment{
                         JSONArray companyArray = gameObject.getJSONArray("involved_companies");
                         int gameCompany = (int)companyArray.get(0);
                         int gameRelease = (int) gameObject.get("first_release_date");
-
+                        Log.v("Object", "is done");
                         games.add(new Games(gameName, gameCover, gameCompany, gameRelease));
 
-                    } catch (UnirestException | JSONException e) {
-                        e.printStackTrace();
-                    }
 
+                    } catch (UnirestException | JSONException e) {
+                       Log.v("Error Occurred"," Line 125");
+                    }
                 }
+
+
             }
 
 
-
-            return null;
+            return true;
         }
 
-        @Override
-        protected void onPostExecute(Object result) {
-            super.onPostExecute(result);
 
-            updateUI();
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result == true) {
+                Log.v("onPost" , "is being executed");
+                updateUI();
+            }
+
+            super.onPostExecute(result);
+            return;
         }
 
     }

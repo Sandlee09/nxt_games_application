@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -55,13 +56,15 @@ public class fullList {
             gameID.add(vGameID);
             platform.add(vPlatform);
 
+            Unirest.shutdown();
+
         }
 
         Log.v("GameID", "" + gameID.get(5));
         Log.v("Platform", "" + platform.get(5));
 
 
-    } catch (UnirestException | JSONException e) {
+    } catch (UnirestException | JSONException | IOException e) {
         Log.v("Exception called", "");
     }
 

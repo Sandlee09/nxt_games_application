@@ -1,47 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:padding="5dp"
+    android:divider="#a31405"
+    android:id="@+id/list_item"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        >
 
         <ImageView
-            android:id="@+id/listView_image"
-            android:layout_width="wrap_content"
+            android:id="@+id/cover_image"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
+            android:background="@drawable/test_cover"
             android:layout_alignParentLeft="true"/>
 
 
 
         <LinearLayout
             android:id="@+id/linear_layout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_toRightOf="@id/listView_image">
+            android:orientation="vertical">
 
         <TextView
-            android:id="@+id/miwok_word"
+            android:id="@+id/game_name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:paddingLeft="16dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:text="God of War"/>
+
+        <TextView
+            android:id="@+id/developer_name"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:paddingLeft="16dp"
-            android:gravity="center_vertical"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/english_word"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:paddingLeft="16dp"
-            android:textColor="#FFFFFF"/>
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:text="By: Santa Monica Studios"/>
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:fontFamily="sans-serif"
+            android:text="04/04/2020"
+            />
 
     </LinearLayout>
 
