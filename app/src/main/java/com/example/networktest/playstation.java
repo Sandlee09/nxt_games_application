@@ -53,8 +53,8 @@ public class playstation extends Fragment{
 
 
 
-            new Task2().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-            new backgroundTasks().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+            new Task1().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+            new Task3().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
 
 
         return view;
@@ -107,10 +107,33 @@ public class playstation extends Fragment{
 
 
 
+    class Task1 extends AsyncTask <String, Void,Boolean> {
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            imageArray imageArray = null;
+            try {
+                imageArray = new imageArray();
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.v("Image", "" + imageArray.getImage());
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            Log.v("Task 1 Done", " is done");
+        }
+    }
 
 
-
-    class backgroundTasks extends AsyncTask <String, Void,Boolean>{
+    class Task3 extends AsyncTask <String, Void,Boolean>{
 
         @Override
         protected void onPreExecute() {
@@ -160,66 +183,6 @@ public class playstation extends Fragment{
 
 
 
-            //Search Database for all gameID's once and add all necessary information to Games Object Array
-               /* try {
-
-                    HttpResponse<String> response = Unirest.post("https://api-v3.igdb.com/games")
-                            .header("user-key", "ae905519b935239aa1d5ddd574f0563a")
-                            .header("Content-Type", "text/plain")
-                            .header("Cookie", "__cfduid=df1974e12093c47d3cf52f64eb47233c31585872828")
-                            .body("fields name, cover, first_release_date, involved_companies; \nwhere id = (" + gameIdString + ");\nlimit 500;\n sort first_release_date asc;")
-                            .asString();
-
-
-                    //Turn Into JSON and add to Games Array
-                    JSONArray gameArray = new JSONArray(response.getBody());
-                    int arrayLength = gameArray.length();
-
-                    for (int i = 0; i < arrayLength; i++) {
-                        JSONObject gameObject = gameArray.getJSONObject(i);
-                        Log.v("Object", "" + gameObject);
-
-                        String gameName = (String) gameObject.get("name");
-
-                        boolean hasCover = gameObject.has("cover");
-                        int gameCover = 0;
-                        if (hasCover == true) {
-                            gameCover = (int) gameObject.get("cover");
-                        }
-
-
-                        boolean hasCompanyArray = gameObject.has("involved_companies");
-                        int gameCompany = 0;
-                        if (hasCompanyArray == true) {
-                            JSONArray companyArray = gameObject.getJSONArray("involved_companies");
-                            gameCompany = (int) companyArray.get(0);
-
-                        }
-
-                        int gameRelease = (int) gameObject.get("first_release_date");
-
-                        games.add(new Games(gameName, gameCover, gameCompany, gameRelease));
-                    }
-
-
-                    Unirest.shutdown();
-
-                } catch (UnirestException | JSONException | IOException e) {
-                    Log.v("Error Occurred", " Line 125");
-                }
-*/
-
-                    //
-            //  Everything was working up to here
-            //Everything was working up to here
-            //Everything was working up to here
-            //Everything was working up to here
-            //Everything was working up to here
-            //Everything was working up to here
-
-
-
-
             try {
                 makeGameArray makeGameArray = new makeGameArray(gameIdString);
                 games = makeGameArray.getGames();
@@ -258,31 +221,7 @@ public class playstation extends Fragment{
 
 
 
-    class Task2 extends AsyncTask <String, Void,Boolean> {
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
-        @Override
-        protected Boolean doInBackground(String... strings) {
-            imageArray imageArray = null;
-            try {
-                imageArray = new imageArray();
-            } catch (UnirestException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            Log.v("Image", "" + imageArray.getImage());
-
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
-                Log.v("Task 2 Done", " is done");
-                Thread.interrupted();
-        }
-    }
 
 
 
