@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        ImageView imageView = findViewById(R.id.cover_image);
+        Picasso.get().load("https://images.igdb.com/igdb/image/upload/t_thumb/co1ui1.jpg").into(imageView);
 
     }
 

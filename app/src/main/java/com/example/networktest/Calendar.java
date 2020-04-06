@@ -3,10 +3,13 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Date;
+import java.util.TimeZone;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Calendar {
@@ -23,8 +26,18 @@ public class Calendar {
     Date date = new Date();
     private long unixTime = date.getTime();
 
+    private String unixToDate;
 
 
+    public String getUnixToDate(long unixTime) {
+
+        Date date = new java.util.Date(unixTime*1000L);
+        SimpleDateFormat sdf = new java.text.SimpleDateFormat("MM-dd-yyyy");
+// give a timezone reference for formatting (see comment at the bottom)
+        sdf.setTimeZone(java.util.TimeZone.getTimeZone("UTC"));
+        String unixToDate = sdf.format(date);
+        return unixToDate;
+    }
 
     public int getMonthNumber() {
        Month month = m;

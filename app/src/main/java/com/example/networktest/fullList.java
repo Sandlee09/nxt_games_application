@@ -21,6 +21,9 @@ public class fullList {
     String thisMonth, thisYear;
     ArrayList<Long> gameID = new ArrayList<>();
     ArrayList<Integer> platform = new ArrayList<>();
+    ArrayList<String> releaseDate = new ArrayList<String>();
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     protected void fullList() throws UnirestException, JSONException {
@@ -31,6 +34,7 @@ public class fullList {
         Calendar calendar = new Calendar();
         thisMonth = Integer.toString(calendar.getMonthNumber());
         thisYear = Integer.toString(calendar.getY());
+
 
         //Start Async Task
         try {
@@ -47,21 +51,21 @@ public class fullList {
         JSONArray gamesArray = new JSONArray(response.getBody());
 
 
+
         for (int i = 0; i < gamesArray.length(); i++) {
             JSONObject game1 = gamesArray.getJSONObject(i);
             long vGameID = game1.getLong("game");
             int vPlatform = game1.getInt("platform");
+            String vReleaseDate = game1.getString("human");
 
 
             gameID.add(vGameID);
             platform.add(vPlatform);
-
+            releaseDate.add(vReleaseDate);
             Unirest.shutdown();
 
         }
 
-        Log.v("GameID", "" + gameID.get(5));
-        Log.v("Platform", "" + platform.get(5));
 
 
     } catch (UnirestException | JSONException | IOException e) {
@@ -81,6 +85,10 @@ public class fullList {
 
     public ArrayList<Integer> getPlatform() {
         return platform;
+    }
+
+    public ArrayList<String> getReleaseDate() {
+        return releaseDate;
     }
 
 
