@@ -39,7 +39,7 @@ public class fullList {
         //Start Async Task
         try {
 
-            Unirest.setTimeouts(0, 0);
+            Unirest.setTimeouts(10000, 10000);
             HttpResponse<String> response = Unirest.post("https://api-v3.igdb.com/release_dates")
                 .header("user-key", "ae905519b935239aa1d5ddd574f0563a")
                 .header("Content-Type", "text/plain")

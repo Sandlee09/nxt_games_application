@@ -34,7 +34,7 @@ public class makeGameArray {
 
         //Search Database for all gameID's once and add all necessary information to Games Object Array
         try {
-
+            Unirest.setTimeouts(10000, 10000);
             HttpResponse<String> response = Unirest.post("https://api-v3.igdb.com/games")
                     .header("user-key", "ae905519b935239aa1d5ddd574f0563a")
                     .header("Content-Type", "text/plain")

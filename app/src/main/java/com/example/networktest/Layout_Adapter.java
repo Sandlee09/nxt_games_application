@@ -1,13 +1,17 @@
 
 package com.example.networktest;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,7 +54,7 @@ public class Layout_Adapter extends ArrayAdapter {
         // Create Image View for Cover and set image to it
         ImageView imageView = listItem.findViewById(R.id.cover_image);
         String url = "https:" + currentWords.getCoverURL();
-        Picasso.get().load(url).fit().into(imageView);
+        Picasso.with(getContext()).load(url).into(imageView);
 
 
 
@@ -72,10 +76,24 @@ public class Layout_Adapter extends ArrayAdapter {
         releaseDate.setText(date);
 
 
+        listItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gameActivity = new Intent(getContext(), GameInfo.class);
+                gameActivity.putExtra("GameID", currentWords.getName());
+                getContext().startActivity(gameActivity);
+
+            }
+        });
+
 
         //Return listItem which is the finished layout for that list item to be displayed
         return listItem;
     }
 
+
+    public void itemClicked() {
+
+    }
 
 }

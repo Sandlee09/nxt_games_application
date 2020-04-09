@@ -1,5 +1,6 @@
 package com.example.networktest;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -48,6 +49,21 @@ public class MainActivity extends AppCompatActivity {
                 Intent ps4Activity = new Intent (getApplicationContext(), ViewPager_Activity.class);
                 ps4Activity.putExtra("viewpager_position", 1);
                 startActivity(ps4Activity);
+            }
+        });
+
+
+        ///
+        ///Test Button for Now
+        ///
+        ///
+        ImageView switchButton =findViewById(R.id.switch_button);
+        switchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent switchActivity = new Intent (getApplicationContext(), GameInfo.class);
+                 switchActivity.putExtra("viewpager_position", 1);
+                startActivity(switchActivity);
             }
         });
 

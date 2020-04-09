@@ -41,9 +41,11 @@ public class getCompanyCode {
         ////
         //// Begining Task 1
         ////
-        Unirest.setTimeouts(0, 0);
+
         HttpResponse<String> response = null;
         try {
+
+            Unirest.setTimeouts(10000, 10000);
             response = Unirest.post("https://api-v3.igdb.com/involved_companies")
                     .header("user-key", "ae905519b935239aa1d5ddd574f0563a")
                     .header("Content-Type", "text/plain")
@@ -81,8 +83,9 @@ public class getCompanyCode {
         ///
         String[] temporary = new String[companyNumber.size()];
 
-        Unirest.setTimeouts(0, 0);
+
         try {
+            Unirest.setTimeouts(10000, 10000);
             HttpResponse<String> response2 = Unirest.post("https://api-v3.igdb.com/companies")
                     .header("user-key", "ae905519b935239aa1d5ddd574f0563a")
                     .header("Content-Type", "text/plain")

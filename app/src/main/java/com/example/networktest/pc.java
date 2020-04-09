@@ -1,6 +1,9 @@
 package com.example.networktest;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -10,12 +13,14 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.mashape.unirest.http.HttpResponse;
@@ -38,6 +43,7 @@ public class pc extends Fragment{
     ArrayList<String> developerName = new ArrayList<>();
     View view;
     ProgressDialog dialog;
+    boolean tasksDone = false;
 
 
     //Platform ID
@@ -63,6 +69,37 @@ public class pc extends Fragment{
         //Set BackGround
         view.setBackgroundResource(R.drawable.midnight_city);
 
+        //Countdown Timer for bad Internet Connection
+        new CountDownTimer(15000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                Log.v("Timer","" + millisUntilFinished);
+            }
+
+            public void onFinish() {
+                Log.v("Timer done","is done"+ tasksDone);
+               if (tasksDone == false) {
+                   //Hide loading circle
+                   dialog.dismiss();
+
+                   LayoutInflater inflater = LayoutInflater.from(getActivity());
+                    View dialog_layout = inflater.inflate(R.layout.dialog_layout,(ViewGroup) getActivity().findViewById(R.id.dialog_root));
+                    AlertDialog.Builder db = new AlertDialog.Builder(getContext());
+                    db.setCancelable(false);
+                    db.setView(dialog_layout);
+                    Button button = (Button) dialog_layout.findViewById(R.id.noInternet_button);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent mainActivity = new Intent (getContext(), MainActivity.class);
+                            startActivity(mainActivity);
+                        }
+                    });
+                    AlertDialog dialog = db.show();
+                       }
+
+            }
+        }.start();
+
 
         //Start Tasks
         new pc.Task1().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
@@ -87,6 +124,7 @@ public class pc extends Fragment{
             dialog.setCanceledOnTouchOutside(false);
             dialog.setCancelable(false);
             dialog.show();
+
         }
 
 
@@ -116,7 +154,11 @@ public class pc extends Fragment{
                 }
             }
 
-            gameIdString = gameIdString.substring(1);
+            if (gameIdString.length() != 0) {
+                gameIdString = gameIdString.substring(1);
+            }
+
+
 
 
             //Empty Out Unused Array's for memory
@@ -179,8 +221,9 @@ public class pc extends Fragment{
                 companyIdString += "," + Integer.toString(games.get(i).getCompany());
             }
 
-            companyIdString = companyIdString.substring(1);
-
+            if (companyIdString.length() != 0) {
+                companyIdString = companyIdString.substring(1);
+            }
 
 
 
@@ -238,10 +281,12 @@ public class pc extends Fragment{
             String coverIdString = "";
             for (int i = 0; i<games.size(); i++) {
                 coverIdString += "," + Integer.toString(games.get(i).getCover());
+                Log.v("covers","" + games.get(i).getCover());
             }
 
-            coverIdString = coverIdString.substring(1);
-
+            if (coverIdString.length() != 0) {
+                coverIdString = coverIdString.substring(1);
+            }
 
 
             //Run HTTP request to get all of the covers
@@ -285,33 +330,6 @@ public class pc extends Fragment{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //Method to Update UI, called on final async task's onPostExecute
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateUI() {
@@ -342,7 +360,8 @@ public class pc extends Fragment{
 
 
             //Hide loading circle
-            dialog.hide();
+            dialog.dismiss();
+            tasksDone = true;
 
         }
 

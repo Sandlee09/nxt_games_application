@@ -1,6 +1,8 @@
 package com.example.networktest;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -10,12 +12,14 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.mashape.unirest.http.HttpResponse;
@@ -38,6 +42,7 @@ public class playstation extends Fragment{
     ArrayList<String> developerName = new ArrayList<>();
     View view;
     ProgressDialog dialog;
+    boolean tasksDone = false;
 
 
     //Platform ID
@@ -61,13 +66,14 @@ public class playstation extends Fragment{
         view = inflater.inflate(R.layout.activity_list, container, false);
 
         //Set BackGround
-        view.setBackgroundResource(R.drawable.dark_ocean);
+        view.setBackgroundResource(R.drawable.midnight_city);
+
 
 
         //Start Tasks
-        new Task1().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        new Task2().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        new Task3().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        new playstation.Task1().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        new playstation.Task2().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        new playstation.Task3().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
 
         return view;
     }
@@ -87,6 +93,7 @@ public class playstation extends Fragment{
             dialog.setCanceledOnTouchOutside(false);
             dialog.setCancelable(false);
             dialog.show();
+
         }
 
 
@@ -94,36 +101,40 @@ public class playstation extends Fragment{
         @Override
         protected Boolean doInBackground(String...process) {
 
-                //Grab Full List of Games for this year and month and add Game ID and Platform ID to arrays
-                fullList listOfGames = new fullList();
-                try {
-                    listOfGames.fullList();
-                } catch (UnirestException | IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            //Grab Full List of Games for this year and month and add Game ID and Platform ID to arrays
+            fullList listOfGames = new fullList();
+            try {
+                listOfGames.fullList();
+            } catch (UnirestException | IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            vGameID = listOfGames.getGameID();
+            vPlatforms = listOfGames.getPlatform();
+
+
+            //Create a string of all gameID for PS4 Platform to search Database only once
+            String gameIdString = "";
+            for (int i = vGameID.size() - 1; i >= 0; i--) {
+
+                if (vPlatforms.get(i) == platformID) {
+                    gameIdString += "," + Long.toString(vGameID.get(i));
                 }
-                vGameID = listOfGames.getGameID();
-                vPlatforms = listOfGames.getPlatform();
+            }
 
-
-                //Create a string of all gameID for PS4 Platform to search Database only once
-                String gameIdString = "";
-                for (int i = vGameID.size() - 1; i >= 0; i--) {
-
-                    if (vPlatforms.get(i) == platformID) {
-                        gameIdString += "," + Long.toString(vGameID.get(i));
-                    }
-                }
-
+            if (gameIdString.length() != 0) {
                 gameIdString = gameIdString.substring(1);
+            }
 
 
-                //Empty Out Unused Array's for memory
-                for (int i = vGameID.size() - 1; i >= 0; i--) {
-                    vGameID.remove(i);
-                    vPlatforms.remove(i);
-                }
+
+
+            //Empty Out Unused Array's for memory
+            for (int i = vGameID.size() - 1; i >= 0; i--) {
+                vGameID.remove(i);
+                vPlatforms.remove(i);
+            }
 
 
 
@@ -179,8 +190,9 @@ public class playstation extends Fragment{
                 companyIdString += "," + Integer.toString(games.get(i).getCompany());
             }
 
-            companyIdString = companyIdString.substring(1);
-
+            if (companyIdString.length() != 0) {
+                companyIdString = companyIdString.substring(1);
+            }
 
 
 
@@ -237,11 +249,12 @@ public class playstation extends Fragment{
             //Create String of CoverID's to search database Once
             String coverIdString = "";
             for (int i = 0; i<games.size(); i++) {
-               coverIdString += "," + Integer.toString(games.get(i).getCover());
+                coverIdString += "," + Integer.toString(games.get(i).getCover());
             }
 
-            coverIdString = coverIdString.substring(1);
-
+            if (coverIdString.length() != 0) {
+                coverIdString = coverIdString.substring(1);
+            }
 
 
             //Run HTTP request to get all of the covers
@@ -285,33 +298,6 @@ public class playstation extends Fragment{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //Method to Update UI, called on final async task's onPostExecute
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void updateUI() {
@@ -342,7 +328,8 @@ public class playstation extends Fragment{
 
 
             //Hide loading circle
-            dialog.hide();
+            dialog.dismiss();
+            tasksDone = true;
 
         }
 
@@ -358,3 +345,4 @@ public class playstation extends Fragment{
 
 
 }
+
