@@ -1,10 +1,18 @@
 package com.example.networktest;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ListView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
@@ -12,24 +20,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.mashape.unirest.http.exceptions.UnirestException;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class ViewPager_Activity extends AppCompatActivity {
 
         ViewPager vp;
         int position;
-        CharSequence actionBarTitle;
-        ActionBar actionBar;
         TabLayout tabLayout;
 
+    @SuppressLint("ResourceType")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.view_pager);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            setTitle("NXT Games");
+            setStatusBar();
 
-            //Set ActionBar Up button
-            actionBar = getSupportActionBar();
-            actionBar.setDisplayHomeAsUpEnabled(true);
+
+
+
 
             //Tab Text Color
             tabLayout = findViewById(R.id.tab_layout);
@@ -49,6 +65,33 @@ public class ViewPager_Activity extends AppCompatActivity {
 
             }
 
+        // Set Status Bar Color
+        public void setStatusBar() {
+            Window window = this.getWindow();
+
+            // clear FLAG_TRANSLUCENT_STATUS flag:
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+            // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+            // finally change the color
+            window.setStatusBarColor(Color.parseColor("#393939"));
+        }
+
+        // Set Custom ActionBar
+        public void setTitle(String title){
+            this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            getSupportActionBar().setDisplayShowCustomEnabled(true);
+            getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+            getSupportActionBar().setElevation(0);
+            View view = getSupportActionBar().getCustomView();
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#393939")));
+
+            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP, ActionBar.DISPLAY_HOME_AS_UP);
+
+        }
+
 
         private void setupViewPager () {
 
@@ -57,7 +100,10 @@ public class ViewPager_Activity extends AppCompatActivity {
             final SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
             //add fragments to the adapter
+            adapter.addFragment(new pc());
             adapter.addFragment(new playstation());
+
+
 
             //initiate viewpager
             vp = (ViewPager) findViewById(R.id.pager);
@@ -69,10 +115,7 @@ public class ViewPager_Activity extends AppCompatActivity {
 
 
             if(position == 0) {
-                tabLayout.setBackgroundColor(Color.parseColor("#1DACEF"));
-                actionBarTitle = adapter.getPageTitle(position);
-                actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#1DACEF")));
-                actionBar.setTitle(actionBarTitle);
+                tabLayout.setBackgroundColor(Color.parseColor("#414345"));
                 Log.v("Position Value: ", "" + position);
             }
 
@@ -83,33 +126,21 @@ public class ViewPager_Activity extends AppCompatActivity {
                 public void onPageSelected(int position) {
 
                     switch (position) {
-                        case 0: tabLayout.setBackgroundColor(Color.parseColor("#1DACEF"));
-                            actionBarTitle = adapter.getPageTitle(position);
-                            actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#1DACEF")));
-                            actionBar.setTitle(actionBarTitle);
+                        case 0: tabLayout.setBackgroundColor(Color.parseColor("#414345"));
                             Log.v("Position Value: ", "" + position);break;
 
 
 
-                        case 1: vp.setCurrentItem(position);
-                            tabLayout.setBackgroundColor(Color.parseColor("#EFA21D"));
-                            actionBarTitle = adapter.getPageTitle(position);
-                            actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#EFA21D")));
-                            actionBar.setTitle(actionBarTitle);
+                        case 1: //vp.setCurrentItem(position);
+                            tabLayout.setBackgroundColor(Color.parseColor("#4286F4"));
                             break;
 
 
                         case 2: tabLayout.setBackgroundColor(Color.parseColor("#017E01"));
-                            actionBarTitle = adapter.getPageTitle(position);
-                            actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#017E01")));
-                            actionBar.setTitle(actionBarTitle);
                             break;
 
 
                         case 3: tabLayout.setBackgroundColor(Color.parseColor("#4F017E"));
-                            actionBarTitle = adapter.getPageTitle(position);
-                            actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4F017E")));
-                            actionBar.setTitle(actionBarTitle);
                             break;
                     }
 
@@ -134,6 +165,8 @@ public class ViewPager_Activity extends AppCompatActivity {
             });
 
         }
+
+
 
 
 }

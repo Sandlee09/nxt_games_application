@@ -26,7 +26,7 @@ public class fullList {
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    protected void fullList() throws UnirestException, JSONException {
+    protected void fullList() throws UnirestException, JSONException, IOException {
 
 
 
@@ -62,15 +62,15 @@ public class fullList {
             gameID.add(vGameID);
             platform.add(vPlatform);
             releaseDate.add(vReleaseDate);
-            Unirest.shutdown();
+
 
         }
 
 
 
-    } catch (UnirestException | JSONException | IOException e) {
+    } catch (UnirestException | JSONException e) {
         Log.v("Exception called", "");
-    }
+    }  Unirest.shutdown();
 
     }
 
@@ -87,9 +87,6 @@ public class fullList {
         return platform;
     }
 
-    public ArrayList<String> getReleaseDate() {
-        return releaseDate;
-    }
 
 
 }

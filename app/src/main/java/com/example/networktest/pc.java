@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class playstation extends Fragment{
+public class pc extends Fragment{
     ArrayList<Long> vGameID ;
     ArrayList<Integer> vPlatforms;
     ArrayList<String> coverURL ;
@@ -45,10 +45,10 @@ public class playstation extends Fragment{
     // PS4 = 48
     // Xbox One = 49
     // Switch = 130
-    private final int platformID = 48;
+    private final int platformID = 6;
 
 
-    public playstation() {
+    public pc() {
         // Required empty public constructor
 
     }
@@ -61,13 +61,13 @@ public class playstation extends Fragment{
         view = inflater.inflate(R.layout.activity_list, container, false);
 
         //Set BackGround
-        view.setBackgroundResource(R.drawable.dark_ocean);
+        view.setBackgroundResource(R.drawable.midnight_city);
 
 
         //Start Tasks
-        new Task1().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        new Task2().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        new Task3().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        new pc.Task1().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        new pc.Task2().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        new pc.Task3().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
 
         return view;
     }
@@ -94,36 +94,36 @@ public class playstation extends Fragment{
         @Override
         protected Boolean doInBackground(String...process) {
 
-                //Grab Full List of Games for this year and month and add Game ID and Platform ID to arrays
-                fullList listOfGames = new fullList();
-                try {
-                    listOfGames.fullList();
-                } catch (UnirestException | IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            //Grab Full List of Games for this year and month and add Game ID and Platform ID to arrays
+            fullList listOfGames = new fullList();
+            try {
+                listOfGames.fullList();
+            } catch (UnirestException | IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            vGameID = listOfGames.getGameID();
+            vPlatforms = listOfGames.getPlatform();
+
+
+            //Create a string of all gameID for PS4 Platform to search Database only once
+            String gameIdString = "";
+            for (int i = vGameID.size() - 1; i >= 0; i--) {
+
+                if (vPlatforms.get(i) == platformID) {
+                    gameIdString += "," + Long.toString(vGameID.get(i));
                 }
-                vGameID = listOfGames.getGameID();
-                vPlatforms = listOfGames.getPlatform();
+            }
+
+            gameIdString = gameIdString.substring(1);
 
 
-                //Create a string of all gameID for PS4 Platform to search Database only once
-                String gameIdString = "";
-                for (int i = vGameID.size() - 1; i >= 0; i--) {
-
-                    if (vPlatforms.get(i) == platformID) {
-                        gameIdString += "," + Long.toString(vGameID.get(i));
-                    }
-                }
-
-                gameIdString = gameIdString.substring(1);
-
-
-                //Empty Out Unused Array's for memory
-                for (int i = vGameID.size() - 1; i >= 0; i--) {
-                    vGameID.remove(i);
-                    vPlatforms.remove(i);
-                }
+            //Empty Out Unused Array's for memory
+            for (int i = vGameID.size() - 1; i >= 0; i--) {
+                vGameID.remove(i);
+                vPlatforms.remove(i);
+            }
 
 
 
@@ -165,7 +165,7 @@ public class playstation extends Fragment{
     ///
     /// Begining of Async Task 2
     ///
-    class Task2 extends AsyncTask <String, Void,Boolean> {
+     class Task2 extends AsyncTask <String, Void,Boolean> {
 
 
         @RequiresApi(api = Build.VERSION_CODES.O)
@@ -227,7 +227,7 @@ public class playstation extends Fragment{
     ///
     /// Begining of Async Task 3
     ///
-    class Task3 extends AsyncTask <String, Void,Boolean> {
+     class Task3 extends AsyncTask <String, Void,Boolean> {
 
 
         @RequiresApi(api = Build.VERSION_CODES.O)
@@ -237,7 +237,7 @@ public class playstation extends Fragment{
             //Create String of CoverID's to search database Once
             String coverIdString = "";
             for (int i = 0; i<games.size(); i++) {
-               coverIdString += "," + Integer.toString(games.get(i).getCover());
+                coverIdString += "," + Integer.toString(games.get(i).getCover());
             }
 
             coverIdString = coverIdString.substring(1);

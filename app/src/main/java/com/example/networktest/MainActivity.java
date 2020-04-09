@@ -1,25 +1,20 @@
 package com.example.networktest;
 
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -29,24 +24,60 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setTitle("NXT Games");
+        setStatusBar();
 
 
 
         //Main Button Creation
-        TextView phrasesButton =findViewById(R.id.test_button);
-        phrasesButton.setOnClickListener(new View.OnClickListener() {
+        ImageView pcButton =findViewById(R.id.pc_button);
+        pcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent openPhrasesActivity = new Intent (getApplicationContext(), ViewPager_Activity.class);
-                openPhrasesActivity.putExtra("viewpager_position", 0);
-                startActivity(openPhrasesActivity);
+                Intent pcActivity = new Intent (getApplicationContext(), ViewPager_Activity.class);
+                pcActivity.putExtra("viewpager_position", 0);
+                startActivity(pcActivity);
             }
         });
 
+        ImageView ps4Button =findViewById(R.id.ps4_button);
+        ps4Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ps4Activity = new Intent (getApplicationContext(), ViewPager_Activity.class);
+                ps4Activity.putExtra("viewpager_position", 1);
+                startActivity(ps4Activity);
+            }
+        });
 
-        ImageView imageView = findViewById(R.id.cover_image);
-        Picasso.get().load("https://images.igdb.com/igdb/image/upload/t_thumb/co1ui1.jpg").into(imageView);
+    }
 
+    // Set Custom ActionBar
+    public void setTitle(String title){
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+        getSupportActionBar().setElevation(0);
+        View view = getSupportActionBar().getCustomView();
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#393939")));
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP, ActionBar.DISPLAY_HOME_AS_UP);
+
+    }
+
+    // Set Status Bar Color
+    public void setStatusBar() {
+        Window window = this.getWindow();
+
+        // clear FLAG_TRANSLUCENT_STATUS flag:
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+        // finally change the color
+        window.setStatusBarColor(Color.parseColor("#393939"));
     }
 
 

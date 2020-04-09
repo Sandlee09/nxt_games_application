@@ -1,27 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:background="#80393939">
 
     <TextView
         android:id="@+id/test_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="Choose Platform to see the Upcoming Games for it."
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        android:textColor="#FFFFFF"
+        android:textSize="28dp"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
 
     <ImageView
-        android:id="@+id/cover_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        tools:layout_editor_absoluteX="137dp"
-        tools:layout_editor_absoluteY="53dp"
-        tools:ignore="MissingConstraints" />
+        android:id="@+id/pc_button"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/steam_circle_2"
+        android:clickable="true"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ps4_button"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/ps4_circle_2"
+                android:clickable="true"/>
+
+            <ImageView
+                android:id="@+id/xbox_button"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/xbox_circle_2"
+                android:clickable="true"/>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/switch_button"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/switch_circle_2"
+            android:clickable="true"/>
+
+    </LinearLayout>
+
+</LinearLayout>

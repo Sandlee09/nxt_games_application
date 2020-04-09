@@ -9,7 +9,7 @@ import java.util.List;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    String title[] = {"Phrases", "Numbers", "Family", "Colors"};
+    String title[] = {"PC", "Playstation 4", "Xbox One", "Nintendo Switch"};
 
 
     private final List<Fragment> mFragmentList = new ArrayList<>();

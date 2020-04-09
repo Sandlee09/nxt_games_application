@@ -1,12 +1,8 @@
 package com.example.networktest;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -14,7 +10,14 @@ public class Games extends ArrayList<Games>{
     String Name;
     int Cover;
     int Company;
+    String companyName;
+
+
+
     int releaseDate;
+    String coverURL;
+
+
 
     public Games(String gameName, int gameCover, int gameCompany, int gameRelease) throws UnirestException, JSONException {
 
@@ -22,6 +25,23 @@ public class Games extends ArrayList<Games>{
         Cover = gameCover;
         Company = gameCompany;
         releaseDate = gameRelease;
+    }
+
+    public String getCoverURL() {
+        return coverURL;
+    }
+
+    public void setCoverURL(String coverURL) {
+        this.coverURL = coverURL;
+    }
+
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
 
