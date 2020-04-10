@@ -70,7 +70,7 @@ public class pc extends Fragment{
         view.setBackgroundResource(R.drawable.midnight_city);
 
         //Countdown Timer for bad Internet Connection
-        new CountDownTimer(15000, 1000) {
+        new CountDownTimer(20000, 1000) {
             public void onTick(long millisUntilFinished) {
                 Log.v("Timer","" + millisUntilFinished);
             }
@@ -281,7 +281,6 @@ public class pc extends Fragment{
             String coverIdString = "";
             for (int i = 0; i<games.size(); i++) {
                 coverIdString += "," + Integer.toString(games.get(i).getCover());
-                Log.v("covers","" + games.get(i).getCover());
             }
 
             if (coverIdString.length() != 0) {

@@ -6,9 +6,12 @@
     android:background="#393939">
 
     <TextView
+        android:id="@+id/game_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="God of War"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="50dp"
+        android:text="Game Title"
         android:textAppearance="?android:textAppearanceLarge"
         android:textStyle="bold"
         android:fontFamily="sans-serif"
@@ -18,7 +21,90 @@
     <com.daimajia.slider.library.SliderLayout
         android:id="@+id/slider"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            style="@style/gameInfo_headers"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Genre:"
+            android:gravity="center"/>
+
+        <TextView
+            style="@style/gameInfo_headers"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Platforms:"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/gameInfo_genre"
+            style="@style/gameInfo"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Unavailable"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/gameInfo_platforms"
+            style="@style/gameInfo"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Unavailable"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/gameInfo_headers"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Developed By:"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/gameInfo_company"
+        style="@style/gameInfo"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Developed By"
+        android:gravity="center"/>
+
+    <TextView
+        style="@style/gameInfo_headers"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Summary:"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/gameInfo_summary"
+        style="@style/gameInfo"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Summary"/>
 
 </LinearLayout>

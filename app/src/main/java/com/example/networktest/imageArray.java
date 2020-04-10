@@ -51,9 +51,8 @@ public class imageArray {
             //get all necessary info from json array
             for (int i = 0; i < coverArray.length(); i++) {
                 JSONObject jsonObject = coverArray.getJSONObject(i);
-                String url = jsonObject.getString("url");
+                String url = jsonObject.getString("image_id");
                 coverUrls.add(url);
-
                 Integer jsonID = jsonObject.getInt("id");
                 coverID.add(jsonID);
             }

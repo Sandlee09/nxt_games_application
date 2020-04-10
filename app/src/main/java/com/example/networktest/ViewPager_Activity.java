@@ -101,7 +101,7 @@ public class ViewPager_Activity extends AppCompatActivity {
 
             //add fragments to the adapter
             adapter.addFragment(new pc());
-            //adapter.addFragment(new playstation());
+            adapter.addFragment(new playstation());
 
 
 

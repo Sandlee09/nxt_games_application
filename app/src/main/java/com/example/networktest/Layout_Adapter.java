@@ -53,7 +53,7 @@ public class Layout_Adapter extends ArrayAdapter {
 
         // Create Image View for Cover and set image to it
         ImageView imageView = listItem.findViewById(R.id.cover_image);
-        String url = "https:" + currentWords.getCoverURL();
+        String url = "https://images.igdb.com/igdb/image/upload/t_original/" + currentWords.getCoverURL() +".jpg";
         Picasso.with(getContext()).load(url).into(imageView);
 
 
@@ -81,6 +81,7 @@ public class Layout_Adapter extends ArrayAdapter {
             public void onClick(View v) {
                 Intent gameActivity = new Intent(getContext(), GameInfo.class);
                 gameActivity.putExtra("GameID", currentWords.getName());
+                gameActivity.putExtra("Company Name", currentWords.getCompanyName());
                 getContext().startActivity(gameActivity);
 
             }

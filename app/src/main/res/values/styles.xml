@@ -8,4 +8,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="gameInfo">
+        <item name="android:textColor">#D1D1D1</item>
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
+    <style name="gameInfo_headers">
+        <item name="android:textColor">#D1D1D1</item>
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+
 </resources>

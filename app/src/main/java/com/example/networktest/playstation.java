@@ -66,7 +66,7 @@ public class playstation extends Fragment{
         view = inflater.inflate(R.layout.activity_list, container, false);
 
         //Set BackGround
-        view.setBackgroundResource(R.drawable.midnight_city);
+        view.setBackgroundResource(R.drawable.dark_ocean);
 
 
 
