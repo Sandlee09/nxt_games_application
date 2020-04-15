@@ -3,21 +3,21 @@
 
 package com.example.networktest;
 
-        import android.os.Build;
-        import android.util.Log;
+import android.os.Build;
+import android.util.Log;
 
-        import androidx.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
-        import com.mashape.unirest.http.HttpResponse;
-        import com.mashape.unirest.http.Unirest;
-        import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 
-        import org.json.JSONArray;
-        import org.json.JSONException;
-        import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-        import java.io.IOException;
-        import java.util.ArrayList;
+import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class makeGameArray {
@@ -39,7 +39,7 @@ public class makeGameArray {
                     .header("user-key", "ae905519b935239aa1d5ddd574f0563a")
                     .header("Content-Type", "text/plain")
                     .header("Cookie", "__cfduid=df1974e12093c47d3cf52f64eb47233c31585872828")
-                    .body("fields name, cover, first_release_date, involved_companies; \nwhere id = (" + gameID + ");\nlimit 500;\n sort first_release_date asc;")
+                    .body("fields name, cover, first_release_date, involved_companies, genres; \nwhere id = (" + gameID + ");\nlimit 500;\n sort first_release_date asc;")
                     .asString();
 
 
@@ -69,8 +69,22 @@ public class makeGameArray {
 
                 int gameRelease = (int) gameObject.get("first_release_date");
 
+                boolean hasGenre = gameObject.has("genres");
+                JSONArray genres;
+                ArrayList<Integer> genreArray = new ArrayList<>();
+                if (hasGenre == true) {
+                    genres = gameObject.getJSONArray("genres");
+                    if (genres != null) {
+                        for (int x = 0; x < genres.length(); x++) {
+                            genreArray.add(genres.getInt(x));
+                        }
+                    }
+                    }
 
-                games.add(new Games(gameName, gameCover, gameCompany, gameRelease));
+
+
+
+                games.add(new Games(gameName, gameCover, gameCompany, gameRelease, genreArray));
             }
 
 

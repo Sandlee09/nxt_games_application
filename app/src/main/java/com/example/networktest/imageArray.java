@@ -33,7 +33,6 @@ public class imageArray {
     protected imageArray(String coverIdList) throws UnirestException, JSONException, IOException {
 
 
-        Log.v("Async Task 2 Running","");
         try {
             Unirest.setTimeouts(10000, 10000);
             HttpResponse<String> response = Unirest.post("https://api-v3.igdb.com/covers")

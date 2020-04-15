@@ -11,20 +11,19 @@ public class Games extends ArrayList<Games>{
     int Cover;
     int Company;
     String companyName;
-
-
-
+    ArrayList<Integer> genres = new ArrayList<>();
     int releaseDate;
     String coverURL;
 
 
 
-    public Games(String gameName, int gameCover, int gameCompany, int gameRelease) throws UnirestException, JSONException {
+    public Games(String gameName, int gameCover, int gameCompany, int gameRelease, ArrayList<Integer> vGenre) throws UnirestException, JSONException {
 
         Name = gameName;
         Cover = gameCover;
         Company = gameCompany;
         releaseDate = gameRelease;
+        genres = vGenre;
     }
 
     public String getCoverURL() {
@@ -59,5 +58,9 @@ public class Games extends ArrayList<Games>{
 
     public int getReleaseDate() {
         return releaseDate;
+    }
+
+    public ArrayList<Integer> getGenres() {
+        return genres;
     }
 }

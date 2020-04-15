@@ -1,18 +1,20 @@
 package com.example.networktest;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
+import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
@@ -20,11 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.mashape.unirest.http.exceptions.UnirestException;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ViewPager_Activity extends AppCompatActivity {
@@ -32,6 +30,12 @@ public class ViewPager_Activity extends AppCompatActivity {
         ViewPager vp;
         int position;
         TabLayout tabLayout;
+        LinearLayout menu;
+        Activity activity;
+        pc mypc;
+        playstation myps4;
+        xbox myxbox;
+        nintendo mynintendo;
 
     @SuppressLint("ResourceType")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -42,6 +46,86 @@ public class ViewPager_Activity extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             setTitle("NXT Games");
             setStatusBar();
+
+            activity = this;
+            mypc = new pc();
+            myps4 = new playstation();
+            myxbox = new xbox();
+            mynintendo = new nintendo();
+
+            //Initiate Genre Menu
+            menu = this.findViewById(R.id.genre_menu);
+
+
+             //Initiate GenreMenuSwitches class
+             GenreMenuSwitches genresOptions = new GenreMenuSwitches(this);
+
+
+
+        // Make Genre Button open menu on click
+        ImageView genre_button = (ImageView) this.findViewById(R.id.genre_options);
+        genre_button.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+
+                menu.setVisibility(View.VISIBLE);
+
+                menu.getLayoutParams().height= ViewGroup.LayoutParams.MATCH_PARENT;
+                menu.getLayoutParams().width= ViewGroup.LayoutParams.MATCH_PARENT;
+
+            }
+        });
+
+
+
+
+        // Set Menu's Confirm Button to hide menu and update UI
+      Button confirm_button = this.findViewById(R.id.menu_confirm);
+        confirm_button.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+
+
+
+                menu.getLayoutParams().height= 100;
+                menu.getLayoutParams().width= 200;
+                menu.setVisibility(View.GONE);
+
+                ArrayList<Integer> chosenGenres = genresOptions.genreChosen;
+
+                mypc.chosenUI(chosenGenres);
+                myps4.chosenUI(chosenGenres);
+                myxbox.chosenUI(chosenGenres);
+                mynintendo.chosenUI(chosenGenres);
+            }
+        });
+
+
+        Button reset_button = this.findViewById(R.id.menu_reset);
+        reset_button.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                menu.getLayoutParams().height= 100;
+                menu.getLayoutParams().width= 200;
+                menu.setVisibility(View.GONE);
+
+                mypc.updateUI(mypc.games);
+                myps4.updateUI(myps4.games);
+                myxbox.updateUI(myxbox.games);
+                mynintendo.updateUI(mynintendo.games);
+            }
+        });
+
+
+
+
+
+
+
+
 
 
 
@@ -61,7 +145,6 @@ public class ViewPager_Activity extends AppCompatActivity {
 
 
              vp.setCurrentItem(position);
-
 
             }
 
@@ -100,8 +183,14 @@ public class ViewPager_Activity extends AppCompatActivity {
             final SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
             //add fragments to the adapter
-            adapter.addFragment(new pc());
-            adapter.addFragment(new playstation());
+
+            adapter.addFragment(mypc);
+            adapter.addFragment(myps4);
+            adapter.addFragment(myxbox);
+            adapter.addFragment(mynintendo);
+
+
+
 
 
 
@@ -113,26 +202,30 @@ public class ViewPager_Activity extends AppCompatActivity {
             //set adapter
             vp.setAdapter(adapter);
 
+            vp.setOffscreenPageLimit(4);
 
             if(position == 0) {
                 tabLayout.setBackgroundColor(Color.parseColor("#414345"));
-                Log.v("Position Value: ", "" + position);
+
             }
 
             vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
                 // This method will be invoked when a new page becomes selected. Animation is not necessarily complete.
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onPageSelected(int position) {
 
                     switch (position) {
                         case 0: tabLayout.setBackgroundColor(Color.parseColor("#414345"));
-                            Log.v("Position Value: ", "" + position);break;
+                            Log.v("Games array size","" + mypc.games.size());
+                            break;
 
 
 
-                        case 1: //vp.setCurrentItem(position);
-                            tabLayout.setBackgroundColor(Color.parseColor("#4286F4"));
+
+                        case 1: tabLayout.setBackgroundColor(Color.parseColor("#4286F4"));
+
                             break;
 
 
@@ -140,7 +233,7 @@ public class ViewPager_Activity extends AppCompatActivity {
                             break;
 
 
-                        case 3: tabLayout.setBackgroundColor(Color.parseColor("#4F017E"));
+                        case 3: tabLayout.setBackgroundColor(Color.parseColor("#ED213A"));
                             break;
                     }
 
@@ -165,9 +258,6 @@ public class ViewPager_Activity extends AppCompatActivity {
             });
 
         }
-
-
-
 
 }
 

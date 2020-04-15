@@ -20,7 +20,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class playstation extends Fragment{
+public class nintendo extends Fragment{
     ArrayList<Long> vGameID ;
     ArrayList<Integer> vPlatforms;
     ArrayList<String> coverURL ;
@@ -33,15 +33,16 @@ public class playstation extends Fragment{
 
 
 
+
     //Platform ID
     // PC = 6
     // PS4 = 48
     // Xbox One = 49
     // Switch = 130
-    private final int platformID = 48;
+    private final int platformID = 130;
 
 
-    public playstation() {
+    public nintendo() {
         // Required empty public constructor
 
     }
@@ -54,24 +55,22 @@ public class playstation extends Fragment{
         view = inflater.inflate(R.layout.activity_list, container, false);
 
         //Set BackGround
-        view.setBackgroundResource(R.drawable.dark_ocean);
+        view.setBackgroundResource(R.drawable.red_background);
 
 
 
 
 
         //Start Tasks
-        new playstation.Task1().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        new playstation.Task2().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        new playstation.Task3().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-
-
-
-
-
+        new nintendo.Task1().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        new nintendo.Task2().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        new nintendo.Task3().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
 
         return view;
     }
+
+
+
 
     //Called when menu Genre Confirm Button is clicked to update the list
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -98,14 +97,16 @@ public class playstation extends Fragment{
     }
 
 
+
+
     ///
     /// Begining of Async Task 1
     ///
     class Task1 extends AsyncTask <String, Void,Boolean>{
         @Override
         protected void onPreExecute() {
-           super.onPreExecute();
-             dialog = new ProgressDialog(getActivity());
+            super.onPreExecute();
+            dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Loading Upcoming Games...");
             dialog.setCanceledOnTouchOutside(false);
             dialog.setCancelable(false);
@@ -176,7 +177,6 @@ public class playstation extends Fragment{
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         protected void onPostExecute(Boolean result) {
-
             super.onPostExecute(result);
             return;
         }
@@ -311,7 +311,7 @@ public class playstation extends Fragment{
 
     //Method to Update UI, called on final async task's onPostExecute
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void updateUI(ArrayList<Games> list) {
+    public void updateUI(ArrayList list) {
 
         //Create Calendar Object for dates
         Calendar calendar = new Calendar();
@@ -339,7 +339,7 @@ public class playstation extends Fragment{
 
 
             //Hide loading circle
-            dialog.dismiss();
+           dialog.dismiss();
             tasksDone = true;
 
         }
@@ -355,7 +355,4 @@ public class playstation extends Fragment{
     }
 
 
-
-
 }
-

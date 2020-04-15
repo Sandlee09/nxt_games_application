@@ -1,38 +1,28 @@
 package com.example.networktest;
 
+import android.animation.LayoutTransition;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.DrawableRes;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class pc extends Fragment{
@@ -40,10 +30,14 @@ public class pc extends Fragment{
     ArrayList<Integer> vPlatforms;
     ArrayList<String> coverURL ;
     ArrayList<Games> games = new ArrayList<Games>();
+    ArrayList<Games> modifiedGames = new ArrayList<Games>();
     ArrayList<String> developerName = new ArrayList<>();
     View view;
     ProgressDialog dialog;
     boolean tasksDone = false;
+    CountDownTimer timer;
+
+
 
 
     //Platform ID
@@ -69,14 +63,25 @@ public class pc extends Fragment{
         //Set BackGround
         view.setBackgroundResource(R.drawable.midnight_city);
 
+
+
+        ((ViewGroup) getActivity().findViewById(R.id.genre_menu)).getLayoutTransition()
+                .enableTransitionType(LayoutTransition.CHANGING);
+
+        ((ViewGroup) getActivity().findViewById(R.id.genre_menu)).getLayoutTransition()
+                .enableTransitionType(LayoutTransition.CHANGING);
+
+
+
+
+
         //Countdown Timer for bad Internet Connection
-        new CountDownTimer(20000, 1000) {
+         timer = new CountDownTimer(20000, 1000) {
             public void onTick(long millisUntilFinished) {
                 Log.v("Timer","" + millisUntilFinished);
             }
 
             public void onFinish() {
-                Log.v("Timer done","is done"+ tasksDone);
                if (tasksDone == false) {
                    //Hide loading circle
                    dialog.dismiss();
@@ -106,7 +111,43 @@ public class pc extends Fragment{
         new pc.Task2().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
         new pc.Task3().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
 
+
+
+
+
+
+
+
+
+
+
         return view;
+    }
+
+
+
+    //Called when menu Genre Confirm Button is clicked to update the list
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void chosenUI(ArrayList<Integer> chosenGenres) {
+        modifiedGames.clear();
+        updateUI(modifiedGames);
+        if (chosenGenres.size() != 0) {
+            for (int i = 0; i < games.size(); i++) {
+                ArrayList<Integer> currentGamesGenre = games.get(i).getGenres();
+                outer: for (int x = 0; x < currentGamesGenre.size(); x++) {
+                    for (int y = 0; y < chosenGenres.size(); y++) {
+                        if (currentGamesGenre.get(x) == chosenGenres.get(y) ) {
+                            modifiedGames.add(games.get(i));
+                            break outer;
+                        }
+                    }
+
+                }
+            }
+
+            updateUI(modifiedGames);
+
+        }
     }
 
 
@@ -120,10 +161,13 @@ public class pc extends Fragment{
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(getActivity());
-            dialog.setMessage("Loading...");
+            dialog.setMessage("Loading Upcoming Games...");
             dialog.setCanceledOnTouchOutside(false);
             dialog.setCancelable(false);
             dialog.show();
+
+
+
 
         }
 
@@ -191,12 +235,13 @@ public class pc extends Fragment{
         @Override
         protected void onPostExecute(Boolean result) {
 
-            if (result == true) {
-                Log.v("onPost" , "is being executed");
+
+            if (games.size() != 0) {
+                timer.cancel();
             }
 
+
             super.onPostExecute(result);
-            return;
         }
 
     }
@@ -259,7 +304,6 @@ public class pc extends Fragment{
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
-            Log.v("Task 2"," Done");
         }
     }
 
@@ -320,8 +364,7 @@ public class pc extends Fragment{
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
-            Log.v("Task 3 Done", "");
-            updateUI();
+            updateUI(games);
         }
     }
 
@@ -331,7 +374,8 @@ public class pc extends Fragment{
 
     //Method to Update UI, called on final async task's onPostExecute
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void updateUI() {
+    public void updateUI(ArrayList list) {
+
 
         //Create Calendar Object for dates
         Calendar calendar = new Calendar();
@@ -364,15 +408,30 @@ public class pc extends Fragment{
 
         }
 
+
         //Create a Layout Adapter instance
-        final Layout_Adapter adapter = new Layout_Adapter(getContext(), 0, games, "#EFA21D");
+        final Layout_Adapter adapter = new Layout_Adapter(getContext(), 0, list);
 
         //Create a new listView set it to id of the rootView in activity_numbers
         ListView listView = (ListView) view.findViewById(R.id.list);
 
         //setAdapter to listView
         listView.setAdapter(adapter);
+
+
+        //Empty Out Unused Array's for memory
+        for (int i = coverURL.size() - 1; i >= 0; i--) {
+            coverURL.remove(i);
+        }
+
+        for (int i = developerName.size() - 1; i >= 0; i--) {
+            developerName.remove(i);
+        }
+
+
     }
+
+
 
 
 }

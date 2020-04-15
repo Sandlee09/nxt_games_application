@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#393939">
+
+
+<LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,11 +25,39 @@
         android:textColor="#D1D1D1"
         android:gravity="center"/>
 
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/sliderView"
+    android:orientation="vertical">
+
     <com.daimajia.slider.library.SliderLayout
         android:id="@+id/slider"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         />
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentBottom="true"
+    android:padding="10dp">
+
+    <Button
+        android:id="@+id/fullscreen"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+
+        android:background="@drawable/fullscreen_icon" />
+</LinearLayout>
+
+
+
+</RelativeLayout>
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -108,3 +143,4 @@
         android:text="Summary"/>
 
 </LinearLayout>
+</ScrollView>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
 
 
 
@@ -46,5 +48,255 @@
 
         </com.google.android.material.tabs.TabLayout>
 
+
+
+
     </androidx.viewpager.widget.ViewPager>
+
+
+    <LinearLayout
+        android:id="@+id/genre_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:background="@drawable/midnight_city"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+
+
+
+
+
+
+
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="10"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/menu_items"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="25dp">
+
+        <Switch
+            android:id="@+id/adventure_genre"
+            style="@style/gameInfo_headers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Adventure"
+            android:layout_marginBottom="25dp"/>
+
+        <Switch
+            android:id="@+id/point_and_click_genre"
+            style="@style/gameInfo_headers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Point-and-Click"
+            android:layout_marginBottom="25dp"/>
+
+        <Switch
+            android:id="@+id/fighting_genre"
+            style="@style/gameInfo_headers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fighting"
+            android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/shooter_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Shooter"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/music_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Music"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/platform_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Platform"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/puzzle_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Puzzle"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/racing_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Racing"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/rts_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Real Time Strategy (RTS)"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/rpg_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Role-playing RPG"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/simulator_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Simulator"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/sport_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sport"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/strategy_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Strategy"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/tbs_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Turn-Based Strategy"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/tactical_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tactical"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/hack_and_slash_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hack and Slash"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/trivia_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trivia"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/pinball_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pinball"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/indie_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Indie"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/arcade_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Arcade"
+                android:layout_marginBottom="25dp"/>
+
+            <Switch
+                android:id="@+id/visual_novel_genre"
+                style="@style/gameInfo_headers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Visual Novel"
+                android:layout_marginBottom="25dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:padding="20dp"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/menu_reset"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Reset"
+                android:layout_marginRight="5dp"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:textColor="#000000" />
+
+
+            <Button
+                android:id="@+id/menu_confirm"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Confirm"
+                android:layout_marginLeft="5dp"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:textColor="#000000"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>

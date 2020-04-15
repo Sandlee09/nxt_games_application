@@ -26,7 +26,6 @@ public class Calendar {
     Date date = new Date();
     private long unixTime = date.getTime();
 
-    private String unixToDate;
 
 
     public String getUnixToDate(long unixTime) {

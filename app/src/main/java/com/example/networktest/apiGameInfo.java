@@ -27,10 +27,6 @@ public class apiGameInfo {
     String summary = "";
 
 
-    public ArrayList<Integer> getScreenshotIDs() {
-        return screenshotIDs;
-    }
-
     public ArrayList<Integer> getPlatformIDs() {
         return platformIDs;
     }
@@ -68,7 +64,12 @@ public class apiGameInfo {
 
 
             JSONArray jsonArray = new JSONArray(response.getBody());
-            JSONObject gameObject = jsonArray.getJSONObject(0);
+            JSONObject gameObject;
+            if (jsonArray.length() > 1) {
+                gameObject = jsonArray.getJSONObject(1);
+            } else {
+                gameObject = jsonArray.getJSONObject(0);
+            }
 
 
             boolean hasSummary = gameObject.has("summary");

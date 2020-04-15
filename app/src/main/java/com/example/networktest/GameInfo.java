@@ -2,15 +2,18 @@ package com.example.networktest;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -47,8 +50,27 @@ public class GameInfo extends AppCompatActivity {
 
 
             Bundle extras = getIntent().getExtras();
-            gameName = extras.getSerializable("GameID").toString();
-            companyName = extras.getSerializable("Company Name").toString();
+            gameName = extras.getString("GameID");
+            companyName = extras.getString("Company Name");
+
+
+
+        Button slider = findViewById(R.id.fullscreen);
+        slider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (imageUrls.size() > 0) {
+                    Intent fullscreen = new Intent(getApplicationContext(), FullscreenImage.class);
+                    fullscreen.putStringArrayListExtra("imageUrls", imageUrls);
+                    fullscreen.putExtra("slider position", sliderShow.getCurrentPosition());
+                    startActivity(fullscreen);
+                }
+
+            }
+        });
+
+
+
 
 
         //Start Background Task
@@ -67,7 +89,7 @@ public class GameInfo extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(GameInfo.this);
-            ((ProgressDialog) dialog).setMessage("Loading...");
+            ((ProgressDialog) dialog).setMessage("Loading Game Info...");
             dialog.setCanceledOnTouchOutside(false);
             dialog.setCancelable(false);
             dialog.show();
@@ -136,14 +158,28 @@ public class GameInfo extends AppCompatActivity {
             sliderShow.stopAutoCycle();
 
             sliderShow.addSlider(textSliderView);
+
         }
+        if (imageUrls.size() > 0) {
+            sliderShow.setCurrentPosition(0);
+        }
+
+
+
+
+
 
         TextView titleTextView = (TextView) findViewById(R.id.game_title);
         titleTextView.setText(gameName);
 
 
         TextView companyTextView = (TextView) findViewById(R.id.gameInfo_company);
-        companyTextView.setText(companyName);
+        if (companyName == "" || companyName == null) {
+            companyTextView.setText("Unknown");
+        } else {
+            companyTextView.setText(companyName);
+        }
+
 
        // Log.v("GameInfo Summary","" + allInformation.getSummary());
 
@@ -237,12 +273,17 @@ public class GameInfo extends AppCompatActivity {
                 case 48: allPlatforms = allPlatforms + ", PS4"; break;
                 case 49: allPlatforms = allPlatforms + ", XBox One"; break;
                 case 130: allPlatforms = allPlatforms + ", Nintendo Switch"; break;
-                default: allPlatforms = ",Unavailable"; break;
 
 
             }
         }
-        allPlatforms = allPlatforms.substring(1);
+
+        if (allPlatforms != "") {
+            allPlatforms = allPlatforms.substring(1);
+        } else {
+            allPlatforms = "Unavailable";
+        }
+
         return allPlatforms;
     }
 
@@ -269,7 +310,7 @@ public class GameInfo extends AppCompatActivity {
         getSupportActionBar().setElevation(0);
         View view = getSupportActionBar().getCustomView();
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#272727")));
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP, ActionBar.DISPLAY_HOME_AS_UP);
+
 
         LinearLayout actionBar = (LinearLayout)findViewById(R.id.custom_actionbar);
         actionBar.setBackgroundColor(Color.parseColor("#272727"));

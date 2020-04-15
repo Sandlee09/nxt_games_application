@@ -6,67 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:background="#80393939">
+    android:background="@drawable/glare_bg"
+    android:padding="30dp">
 
-    <TextView
-        android:id="@+id/test_button"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:text="Choose Platform to see the Upcoming Games for it."
-        android:textStyle="bold"
-        android:fontFamily="sans-serif"
-        android:textColor="#FFFFFF"
-        android:textSize="28dp"
-        android:textAlignment="center"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
+        <ImageView
+            android:id="@+id/pc_button"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/bubble_pc"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
+        <ImageView
+            android:id="@+id/ps4_button"
+            android:layout_width="140dp"
+            android:layout_height="125dp"
+            android:background="@drawable/bubble_ps4"
+            />
+    </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
+        <ImageView
+            android:id="@+id/xbox_button"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/bubble_xbox"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/pc_button"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/steam_circle_2"
-        android:clickable="true"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/ps4_button"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/ps4_circle_2"
-                android:clickable="true"/>
-
-            <ImageView
-                android:id="@+id/xbox_button"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginLeft="30dp"
-                android:background="@drawable/xbox_circle_2"
-                android:clickable="true"/>
-
-
-        </LinearLayout>
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
         <ImageView
             android:id="@+id/switch_button"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/switch_circle_2"
-            android:clickable="true"/>
+            android:background="@drawable/bubble_switch"/>
+    </RelativeLayout>
 
-    </LinearLayout>
+
 
 </LinearLayout>

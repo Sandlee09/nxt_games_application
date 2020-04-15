@@ -25,13 +25,11 @@ import java.util.List;
 public class Layout_Adapter extends ArrayAdapter {
 
 
-    private String backgroundColor;
 
 
 
-    public Layout_Adapter(@NonNull Context context, int resource, @NonNull List objects, String vBackgroundColor) {
+    public Layout_Adapter(@NonNull Context context, int resource, @NonNull List objects) {
         super(context, resource, objects);
-        backgroundColor = vBackgroundColor;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -81,7 +79,14 @@ public class Layout_Adapter extends ArrayAdapter {
             public void onClick(View v) {
                 Intent gameActivity = new Intent(getContext(), GameInfo.class);
                 gameActivity.putExtra("GameID", currentWords.getName());
-                gameActivity.putExtra("Company Name", currentWords.getCompanyName());
+
+
+                if(currentWords.getCompanyName() != null && currentWords.getCompanyName() != "") {
+                    gameActivity.putExtra("Company Name", currentWords.getCompanyName());
+                } else {
+                    gameActivity.putExtra("Company Name", "Unknown");
+                }
+
                 getContext().startActivity(gameActivity);
 
             }
