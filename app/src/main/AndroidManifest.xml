@@ -33,6 +33,11 @@
             android:name=".GameInfo"
             android:parentActivityName=".ViewPager_Activity" />
 
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8953123945248335~3258017023"/>
+
     </application>
 
 </manifest>

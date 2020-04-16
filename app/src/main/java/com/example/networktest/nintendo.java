@@ -28,8 +28,9 @@ public class nintendo extends Fragment{
     ArrayList<Games> modifiedGames = new ArrayList<Games>();
     ArrayList<String> developerName = new ArrayList<>();
     View view;
-    ProgressDialog dialog;
+    //ProgressDialog dialog;
     boolean tasksDone = false;
+    AsyncTask task1, task2, task3;
 
 
 
@@ -62,9 +63,9 @@ public class nintendo extends Fragment{
 
 
         //Start Tasks
-        new nintendo.Task1().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        new nintendo.Task2().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        new nintendo.Task3().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        task1 = new nintendo.Task1().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        task2 = new nintendo.Task2().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+        task3 = new nintendo.Task3().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
 
         return view;
     }
@@ -106,11 +107,11 @@ public class nintendo extends Fragment{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(getActivity());
+           /* dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Loading Upcoming Games...");
             dialog.setCanceledOnTouchOutside(false);
             dialog.setCancelable(false);
-            dialog.show();
+           // dialog.show();*/
 
         }
 
@@ -339,7 +340,7 @@ public class nintendo extends Fragment{
 
 
             //Hide loading circle
-           dialog.dismiss();
+           //dialog.dismiss();
             tasksDone = true;
 
         }
@@ -352,6 +353,24 @@ public class nintendo extends Fragment{
 
         //setAdapter to listView
         listView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onStop() {
+
+        if(task1 != null && task1.getStatus() == AsyncTask.Status.RUNNING) {
+            task1.cancel(true);
+        }
+
+        if(task2 != null && task2.getStatus() == AsyncTask.Status.RUNNING) {
+            task2.cancel(true);
+        }
+
+        if(task3 != null && task3.getStatus() == AsyncTask.Status.RUNNING) {
+            task3.cancel(true);
+        }
+
+        super.onStop();
     }
 
 

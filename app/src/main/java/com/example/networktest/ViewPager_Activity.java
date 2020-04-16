@@ -21,6 +21,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.ads.nativetemplates.NativeTemplateStyle;
+import com.google.android.ads.nativetemplates.TemplateView;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -36,6 +41,7 @@ public class ViewPager_Activity extends AppCompatActivity {
         playstation myps4;
         xbox myxbox;
         nintendo mynintendo;
+        ActionBar actionBar;
 
     @SuppressLint("ResourceType")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -52,6 +58,7 @@ public class ViewPager_Activity extends AppCompatActivity {
             myps4 = new playstation();
             myxbox = new xbox();
             mynintendo = new nintendo();
+            actionBar = getSupportActionBar();
 
             //Initiate Genre Menu
             menu = this.findViewById(R.id.genre_menu);
@@ -88,7 +95,6 @@ public class ViewPager_Activity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-
                 menu.getLayoutParams().height= 100;
                 menu.getLayoutParams().width= 200;
                 menu.setVisibility(View.GONE);
@@ -116,11 +122,36 @@ public class ViewPager_Activity extends AppCompatActivity {
                 myps4.updateUI(myps4.games);
                 myxbox.updateUI(myxbox.games);
                 mynintendo.updateUI(mynintendo.games);
+
             }
         });
 
 
 
+
+
+
+
+
+
+
+        AdLoader adLoader = new AdLoader.Builder(this, getString(R.string.viewpager_ad_unit_id))
+                .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
+                    ColorDrawable cd = new ColorDrawable(393939);
+                    @Override
+                    public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
+                        NativeTemplateStyle styles = new
+                                NativeTemplateStyle.Builder().withMainBackgroundColor(cd).build();
+
+                        TemplateView template = findViewById(R.id.my_template_viewpager);
+                        template.setStyles(styles);
+                        template.setNativeAd(unifiedNativeAd);
+
+                    }
+                })
+                .build();
+
+        adLoader.loadAd(new AdRequest.Builder().build());
 
 
 
@@ -259,5 +290,13 @@ public class ViewPager_Activity extends AppCompatActivity {
 
         }
 
+    @Override
+    public void finish() {
+        mypc.onStop();
+        myps4.onStop();
+        myxbox.onStop();
+        mynintendo.onStop();
+        super.finish();
+    }
 }
 

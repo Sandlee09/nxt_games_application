@@ -3,4 +3,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="game_info_ad_unit_id">ca-app-pub-8953123945248335/7874605806</string>
+    <string name="viewpager_ad_unit_id">ca-app-pub-8953123945248335/8427185867</string>
 </resources>

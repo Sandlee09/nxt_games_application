@@ -9,7 +9,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,6 +23,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+import com.google.android.ads.nativetemplates.NativeTemplateStyle;
+import com.google.android.ads.nativetemplates.TemplateView;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import org.json.JSONException;
@@ -39,6 +43,7 @@ public class GameInfo extends AppCompatActivity {
     apiGameInfo allInformation;
     Dialog dialog;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -75,6 +80,56 @@ public class GameInfo extends AppCompatActivity {
 
         //Start Background Task
         new Task1().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+
+
+
+
+
+
+
+
+
+
+
+
+        AdLoader adLoader = new AdLoader.Builder(this, getString(R.string.game_info_ad_unit_id))
+                .forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
+                    ColorDrawable cd = new ColorDrawable(393939);
+                    @Override
+                    public void onUnifiedNativeAdLoaded(UnifiedNativeAd unifiedNativeAd) {
+                        NativeTemplateStyle styles = new
+                                NativeTemplateStyle.Builder().withMainBackgroundColor(cd).build();
+
+                        TemplateView template = findViewById(R.id.my_template);
+                        template.setStyles(styles);
+                        template.setNativeAd(unifiedNativeAd);
+
+                    }
+                })
+                .build();
+
+        adLoader.loadAd(new AdRequest.Builder().build());
+
+      /* ActionBar mActionBar = getSupportActionBar();
+        ScrollView scrollView = findViewById(R.id.game_info_scrollview);
+        scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                float mfloat = ((ScrollView)findViewById(R.id.game_info_parent)).getScrollY();
+                if (mfloat >= 20 && mActionBar.isShowing()) {
+                    mActionBar.hide();
+                } else if ( mfloat==0 && !mActionBar.isShowing()) {
+                    mActionBar.show();
+                }
+            }
+        });*/
+
+
+
+
+
+
+
 
 
         }
@@ -315,6 +370,17 @@ public class GameInfo extends AppCompatActivity {
         LinearLayout actionBar = (LinearLayout)findViewById(R.id.custom_actionbar);
         actionBar.setBackgroundColor(Color.parseColor("#272727"));
 
+
+        LinearLayout options_background = (LinearLayout) findViewById(R.id.options_icon_background);
+        options_background.setVisibility(View.GONE);
+
     }
 
-}
+
+    }
+
+
+
+
+
+

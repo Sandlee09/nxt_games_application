@@ -3,6 +3,7 @@ package com.example.networktest;
 import android.animation.LayoutTransition;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -25,7 +27,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class pc extends Fragment{
+public class pc extends Fragment {
     ArrayList<Long> vGameID ;
     ArrayList<Integer> vPlatforms;
     ArrayList<String> coverURL ;
@@ -36,8 +38,8 @@ public class pc extends Fragment{
     ProgressDialog dialog;
     boolean tasksDone = false;
     CountDownTimer timer;
-
-
+    AsyncTask task1, task2, task3;
+    ListView listView;
 
 
     //Platform ID
@@ -54,6 +56,7 @@ public class pc extends Fragment{
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,7 +79,7 @@ public class pc extends Fragment{
 
 
         //Countdown Timer for bad Internet Connection
-         timer = new CountDownTimer(20000, 1000) {
+         timer = new CountDownTimer(30000, 1000) {
             public void onTick(long millisUntilFinished) {
                 Log.v("Timer","" + millisUntilFinished);
             }
@@ -107,16 +110,30 @@ public class pc extends Fragment{
 
 
         //Start Tasks
-        new pc.Task1().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        new pc.Task2().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        new pc.Task3().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+       task1 = new pc.Task1().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+       task2 = new pc.Task2().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+       task3 = new pc.Task3().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
 
 
 
 
 
 
+        listView = (ListView) view.findViewById(R.id.list);
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
 
+                if (scrollState >= 2) {
+                    Log.v("Scrolled","");
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                Log.v("Scrolled","");
+            }
+        });
 
 
 
@@ -152,7 +169,6 @@ public class pc extends Fragment{
 
 
 
-
     ///
     /// Begining of Async Task 1
     ///
@@ -162,8 +178,14 @@ public class pc extends Fragment{
             super.onPreExecute();
             dialog = new ProgressDialog(getActivity());
             dialog.setMessage("Loading Upcoming Games...");
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.setCancelable(false);
+           // dialog.setCanceledOnTouchOutside(false);
+           // dialog.setCancelable(false);
+            dialog.setButton(AlertDialog.BUTTON_NEUTRAL,"Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    getActivity().finish();
+                }
+            });
             dialog.show();
 
 
@@ -413,10 +435,14 @@ public class pc extends Fragment{
         final Layout_Adapter adapter = new Layout_Adapter(getContext(), 0, list);
 
         //Create a new listView set it to id of the rootView in activity_numbers
-        ListView listView = (ListView) view.findViewById(R.id.list);
+        listView = (ListView) view.findViewById(R.id.list);
 
         //setAdapter to listView
         listView.setAdapter(adapter);
+
+
+
+
 
 
         //Empty Out Unused Array's for memory
@@ -431,7 +457,28 @@ public class pc extends Fragment{
 
     }
 
+    @Override
+    public void onStop() {
+
+        if(task1 != null && task1.getStatus() == AsyncTask.Status.RUNNING) {
+            task1.cancel(true);
+        }
+
+        if(task2 != null && task2.getStatus() == AsyncTask.Status.RUNNING) {
+            task2.cancel(true);
+        }
+
+        if(task3 != null && task3.getStatus() == AsyncTask.Status.RUNNING) {
+            task3.cancel(true);
+        }
+
+        timer.cancel();
+        super.onStop();
+    }
+
+
 
 
 
 }
+
